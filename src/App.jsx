@@ -10,6 +10,7 @@ const startData = {
 
 export default function App() {
   const [formData, setFormData] = useState([]);
+  const [users, setUsers] = useState(startData);
 
   const fetchData = () => {
     axios.get("http://localhost:3000/posts").then(function (res) {
