@@ -19,6 +19,19 @@ export default function App() {
   };
 
   useEffect(fetchData, []);
+  const handleFormData = (fieldName, value) => {
+    setUsers((prev) => {
+      return { ...prev, [fieldName]: value };
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post("http://localhost:3000/posts", users).then((response) => {
+      setFormData((prev) => [...prev, response.data]);
+      setUsers(startData);
+    });
+  };
 
   return (
     <div className="container">
@@ -45,6 +58,42 @@ export default function App() {
       </ul>
       <hr />
       <h3>Aggiungi prodotto</h3>
+      <form onSubmit={handleSubmit}>
+        <input
+          id="title"
+          type="text"
+          placeholder="Inserisci il titolo"
+          value={formData.title}
+          onChange={(event) => handleFormData("title", event.target.value)}
+          required
+        />
+        <input
+          id="image"
+          type="text"
+          placeholder="Inserisci l'url dell'immagine"
+          value={formData.image}
+          onChange={(event) => handleFormData("image", event.target.value)}
+          required
+        />
+        <input
+          id="content"
+          type="text"
+          placeholder="Inserisci il content"
+          value={formData.content}
+          onChange={(event) => handleFormData("content", event.target.value)}
+          required
+        />
+        <input
+          id="tags"
+          type="text"
+          placeholder="Inserisci i tag"
+          value={formData.tags}
+          onChange={(event) => handleFormData("tags", event.target.value)}
+          required
+        />
+
+        <button type="submit">invia</button>
+      </form>
     </div>
   );
 }
