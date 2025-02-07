@@ -33,6 +33,12 @@ export default function App() {
     });
   };
 
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:3000/posts/${id}`).then(() => {
+      setFormData((prev) => prev.filter((item) => item.id !== id));
+    });
+  };
+
   return (
     <div className="container">
       <h1>Lista della spesa</h1>
@@ -52,6 +58,7 @@ export default function App() {
               <p>
                 {Array.isArray(item.tags) ? item.tags.join(" - ") : item.tags}
               </p>
+              <button onClick={() => handleDelete(item.id)}>❌ Elimina</button>
             </li>
           </div>
         ))}
